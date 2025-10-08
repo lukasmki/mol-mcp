@@ -1,0 +1,30 @@
+[project]
+name = "mol-mcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13.5"
+dependencies = [
+    "fast-agent-mcp",
+    "fastmcp>=2.12.4",
+    "rdkit>=2025.9.1",
+    "ase>=3.26.0",
+    "tblite>=0.5.0",
+]
+
+[project.entry-points.console_scripts]
+mol-mcp = "molmcp:main"
+smileymcp = "molmcp.tools.smileymcp:main"
+qcmcp = "molmcp.tools.qcmcp:main"
+
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tools.setuptools.packages.find]
+namespaces = true
+where = ["src"]
+
+[tool.uv]
+index-strategy="unsafe-first-match"
