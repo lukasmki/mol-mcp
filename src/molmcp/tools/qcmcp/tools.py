@@ -7,6 +7,7 @@ from . import qc_mcp
 
 @qc_mcp.tool
 def geometry_optimize(input: str):
+    """Optimize the input geometry using xTB"""
     atoms = io.read(StringIO(input), index=0)
 
     log = StringIO()

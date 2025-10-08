@@ -13,9 +13,6 @@ fast = FastAgent(
 )
 
 default_instruction = """You are a helpful AI Agent.
-
-{{serverInstructions}}
-
 The current date is {{currentDate}}."""
 
 

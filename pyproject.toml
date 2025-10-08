@@ -12,17 +12,16 @@ dependencies = [
     "tblite>=0.5.0",
 ]
 
-[project.entry-points.console_scripts]
+[project.scripts]
 mol-mcp = "molmcp:main"
-smileymcp = "molmcp.tools.smileymcp:main"
-qcmcp = "molmcp.tools.qcmcp:main"
-
+smiley = "molmcp.tools.smileymcp:main"
+qc = "molmcp.tools.qcmcp:main"
 
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tools.setuptools.packages.find]
+[tool.setuptools.packages.find]
 namespaces = true
 where = ["src"]
 

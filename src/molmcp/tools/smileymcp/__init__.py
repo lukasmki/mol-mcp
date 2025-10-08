@@ -1,7 +1,7 @@
 from fastmcp import FastMCP
 
 smiley_mcp = FastMCP(
-    "SmileyMCP",
+    "SMILEY",
     instructions="Tools for manipulating SMILES strings and applying SMARTS patterns",
 )
 
