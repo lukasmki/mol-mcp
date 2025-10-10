@@ -1,10 +1,3 @@
-from fastmcp import FastMCP
+from .server import smiley_mcp
 
-smiley_mcp = FastMCP(
-    "SMILEY",
-    instructions="Tools for manipulating SMILES strings and applying SMARTS patterns",
-)
-
-
-def main():
-    smiley_mcp.run(transport="stdio")
+__all__ = ["smiley_mcp"]

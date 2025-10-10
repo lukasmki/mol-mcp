@@ -22,10 +22,19 @@ README.md           # Project documentation
 
 ## Installation
 
+```sh
+# macOS
+brew install uv
+
+# Linux/Windows  
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
 The `qc` mcp server depends on `tblite` and requires a Fortran compiler to complete installation.
 
 ```sh
-$ brew install gfortran
+# macOS
+brew install gfortran
 ```
 
 ## Usage
@@ -33,22 +42,7 @@ $ brew install gfortran
 ### Tools
 
 ```sh
-$ uv run <mcp-server>
-$ uv run mol-mcp
-$ uv run smiley
-$ uv run qc
-```
-
-```sh
-$ uvx --from /this/repo/ mol-mcp
-$ uvx --from /this/repo/ smiley
-$ uvx --from /this/repo/ qc
-```
-
-```sh
-$ uvx --from git+https://github.com/lukasmki/mol-mcp mol-mcp
-$ uvx --from git+https://github.com/lukasmki/mol-mcp smiley
-$ uvx --from git+https://github.com/lukasmki/mol-mcp qc
+uvx --from git+https://github.com/lukasmki/mol-mcp mol-mcp
 ```
 
 ### Agents

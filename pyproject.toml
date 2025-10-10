@@ -13,9 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mol-mcp = "molmcp:main"
-smiley = "molmcp.tools.smileymcp:main"
-qc = "molmcp.tools.qcmcp:main"
+mol-mcp = "molmcp.server:main"
 
 [build-system]
 requires = ["setuptools", "wheel"]
