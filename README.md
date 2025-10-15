@@ -13,8 +13,8 @@ MolMCP is a modular set of interfaces for chemistry workflows. It provides a fle
 ```sh
 src/
   molmcp/           # Main package
-    agents/        # Example agents and configs
-    tools/         # Tool implementations (qc-mcp, smiley-mcp, etc.)
+    agents/         # Agent servers
+    tools/          # Tool servers
 tests/              # Test suite
 pyproject.toml      # Project metadata and dependencies
 README.md           # Project documentation
@@ -22,11 +22,13 @@ README.md           # Project documentation
 
 ## Installation
 
+Install `uv`
+
 ```sh
 # macOS
 brew install uv
 
-# Linux/Windows  
+# Linux/WSL2  
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
@@ -35,6 +37,87 @@ The `qc` mcp server depends on `tblite` and requires a Fortran compiler to compl
 ```sh
 # macOS
 brew install gfortran
+
+# Linux/WSL2
+sudo apt install gfortran
+```
+
+### Easy Install with `uvx`: MCP-JSON Supporting Clients (Claude Desktop)
+
+Add the server into your `claude_desktop_config.json`.
+
+```json
+{
+    "mcpServers": {
+        "MolMCP": {
+            "command": "uvx",
+            "args": [
+                "-from",
+                "git+https://github.com/lukasmki/mol-mcp",
+                "mol-mcp"
+            ]
+        }
+    }
+}
+```
+
+On Windows with WSL2,
+```json
+{
+    "mcpServers": {
+        "MolMCP": {
+            "command": "wsl",
+            "args": [
+                "--shell_type",
+                "login",
+                "uvx",
+                "-from",
+                "git+https://github.com/lukasmki/mol-mcp",
+                "mol-mcp"
+            ]
+        }
+    }
+}
+```
+
+### Development Install
+
+Clone the repository.
+
+```json
+{
+    "mcpServers": {
+        "MolMCP": {
+            "command": "uv",
+            "args": [
+                "run",
+                "--project",
+                "/path/to/mol-mcp",
+                "mol-mcp"
+            ]
+        }
+    }
+}
+```
+
+On Windows with WSL2,
+```json
+{
+    "mcpServers": {
+        "MolMCP": {
+            "command": "wsl",
+            "args": [
+                "--shell_type",
+                "login",
+                "uv",
+                "run",
+                "--project",
+                "/path/to/mol-mcp",
+                "mol-mcp"
+            ]
+        }
+    }
+}
 ```
 
 ## Usage

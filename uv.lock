@@ -1,6 +1,10 @@
 version = 1
 revision = 3
 requires-python = ">=3.13.5"
+resolution-markers = [
+    "sys_platform != 'darwin'",
+    "sys_platform == 'darwin'",
+]
 
 [[package]]
 name = "a2a-sdk"
@@ -1290,7 +1294,8 @@ dependencies = [
     { name = "fast-agent-mcp" },
     { name = "fastmcp" },
     { name = "rdkit" },
-    { name = "tblite" },
+    { name = "tblite", version = "0.4.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'darwin'" },
+    { name = "tblite", version = "0.5.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
 ]
 
 [package.metadata]
@@ -1299,7 +1304,8 @@ requires-dist = [
     { name = "fast-agent-mcp" },
     { name = "fastmcp", specifier = ">=2.12.4" },
     { name = "rdkit", specifier = ">=2025.9.1" },
-    { name = "tblite", specifier = ">=0.5.0" },
+    { name = "tblite", marker = "sys_platform != 'darwin'", specifier = "==0.4.0" },
+    { name = "tblite", marker = "sys_platform == 'darwin'", specifier = ">=0.5.0" },
 ]
 
 [[package]]
@@ -2404,8 +2410,8 @@ name = "secretstorage"
 version = "3.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography" },
-    { name = "jeepney" },
+    { name = "cryptography", marker = "sys_platform != 'darwin'" },
+    { name = "jeepney", marker = "sys_platform != 'darwin'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/31/9f/11ef35cf1027c1339552ea7bfe6aaa74a8516d8b5caf6e7d338daf54fd80/secretstorage-3.4.0.tar.gz", hash = "sha256:c46e216d6815aff8a8a18706a2fbfd8d53fcbb0dce99301881687a1b0289ef7c", size = 19748, upload-time = "2025-09-09T16:42:13.859Z" }
 wheels = [
@@ -2465,16 +2471,32 @@ wheels = [
 
 [[package]]
 name = "tblite"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "sys_platform != 'darwin'",
+]
+dependencies = [
+    { name = "cffi", marker = "sys_platform != 'darwin'" },
+    { name = "numpy", marker = "sys_platform != 'darwin'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e2/e6/b374321b2d480cda450911d4122073ff67ebb5284b31d8fbfcfd3f08f144/tblite-0.4.0.tar.gz", hash = "sha256:c2334dced8e61e26cd24e1ddb53d10aa0d685cf4df451fc8547192163cddc113", size = 657027, upload-time = "2024-11-17T20:19:04.803Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0b/c5/49c4e33f9158fe5b73a9f7ab2194ba9d31c0a8f8ea6f9af770c06a5583dc/tblite-0.4.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b81ae74e8cf882f61aba8a446cad55a3975ee5d7105c181a32a1ee98b4aa0cd3", size = 5687960, upload-time = "2024-11-17T20:18:27.35Z" },
+]
+
+[[package]]
+name = "tblite"
 version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "sys_platform == 'darwin'",
+]
 dependencies = [
-    { name = "cffi" },
-    { name = "numpy" },
+    { name = "cffi", marker = "sys_platform == 'darwin'" },
+    { name = "numpy", marker = "sys_platform == 'darwin'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/18/b4/887888d2aae253196c18ca10a75dd40330fc6b6c3567b70d57b7776d3eac/tblite-0.5.0.tar.gz", hash = "sha256:5dae9e7f559a2602c361acf3817c987501f5b13eaf2072b5f81bb8ae071fc7cb", size = 861998, upload-time = "2025-07-30T11:57:11.619Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/65/a0/3421d2aba508945db99c3e3c94b94d87fa79e7e4101430bb19dbf41f3243/tblite-0.5.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d82af8c10a7f6fbfe52a78b8699539199d09cefd8eb825d527a857ecf1228bdd", size = 5161320, upload-time = "2025-07-30T11:56:55.377Z" },
-]
 
 [[package]]
 name = "tenacity"
