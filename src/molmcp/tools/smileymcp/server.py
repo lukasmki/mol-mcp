@@ -6,3 +6,7 @@ smiley_mcp = FastMCP(
     instructions="Tools for manipulating SMILES strings and applying SMARTS patterns",
 )
 register_tools(smiley_mcp)
+
+
+def main():
+    smiley_mcp.run()

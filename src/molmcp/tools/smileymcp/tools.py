@@ -13,7 +13,7 @@ def register_tools(mcp: FastMCP[Any]):
     @mcp.tool
     def has_substructure(mol: str, target_smarts: str) -> bool:
         "Check if SMILES contains SMARTS pattern substructure"
-        return str(SMILES(mol).has_substructure(target_smarts))
+        return SMILES(mol).has_substructure(target_smarts)
 
     @mcp.tool
     def max_common_substructure(mols: list[str]) -> dict[str, str]:

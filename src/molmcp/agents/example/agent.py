@@ -12,12 +12,11 @@ fast = FastAgent(
     parse_cli_args=False,
 )
 
-default_instruction = """You are a helpful AI Agent.
-The current date is {{currentDate}}."""
+default_instruction = """The current date is {{currentDate}}."""
 
 
 # Define the agent
-@fast.agent(instruction=default_instruction)
+@fast.agent(instruction=default_instruction, servers=["filesystem", "smiley"])
 async def main():
     # use the --model command line switch or agent arguments to change model
     async with fast.run() as agent:

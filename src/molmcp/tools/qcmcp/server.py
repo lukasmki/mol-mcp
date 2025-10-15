@@ -6,3 +6,7 @@ qc_mcp = FastMCP(
     instructions="Tools for running extended tight-binding (xTB) calculations",
 )
 register_tools(qc_mcp)
+
+
+def main():
+    qc_mcp.run()
