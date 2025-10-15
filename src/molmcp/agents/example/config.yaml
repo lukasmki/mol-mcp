@@ -34,6 +34,12 @@ logger:
 # MCP Servers
 mcp:
   servers:
-    fetch:
-      command: "uvx"
-      args: ["mcp-server-fetch"]
+    smiley:
+      command: "uv"
+      args: ["run", "sm-mcp"]
+    filesystem:
+      command: "npx"
+      args: ["-y", "@modelcontextprotocol/server-filesystem"]
+      roots:
+        name: "Scratch"
+        uri: "file://Users/lkim/Projects/QC-MCP/scratch/"
