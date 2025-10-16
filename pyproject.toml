@@ -17,7 +17,7 @@ dependencies = [
 mol-mcp = "molmcp.server:main"
 sm-mcp = "molmcp.tools.smileymcp.server:main"
 qc-mcp = "molmcp.tools.qcmcp.server:main"
-
+pack-mcp = "molmcp.tools.packmcp.server:main"
 
 [build-system]
 requires = ["setuptools", "wheel"]
