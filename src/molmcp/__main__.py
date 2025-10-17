@@ -8,7 +8,8 @@ AGENTS = {
     "smiley": "molmcp.agents.smiley.agent",
 }
 
-if __name__ == "__main__":
+
+def main():
     parser = ArgumentParser()
     parser.add_argument("agent", nargs="?", default="example", help="Agent to run")
     parser.add_argument(
@@ -38,3 +39,7 @@ if __name__ == "__main__":
 
     # Execute the agent module as a script (honors if __name__ == '__main__')
     runpy.run_module(module_name, run_name="__main__", alter_sys=True)
+
+
+if __name__ == "__main__":
+    main()

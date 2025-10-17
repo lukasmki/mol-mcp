@@ -156,7 +156,13 @@ uvx --from git+https://github.com/lukasmki/mol-mcp mol-mcp
 
 ### Agents
 
+To use the default agent, set your API keys as env variables and run,
 
+```sh
+uv run agent example
+```
+
+Alternatively, you can put your keys in `fastagent.secrets.yaml` in your project dir.
 
 ## Contributing
 
