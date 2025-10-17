@@ -62,6 +62,7 @@ Add the server into your `claude_desktop_config.json`.
 ```
 
 On Windows with WSL2,
+
 ```json
 {
     "mcpServers": {
@@ -101,6 +102,7 @@ Clone the repository.
 ```
 
 On Windows with WSL2,
+
 ```json
 {
     "mcpServers": {
@@ -114,6 +116,27 @@ On Windows with WSL2,
                 "--project",
                 "/path/to/mol-mcp",
                 "mol-mcp"
+            ]
+        }
+    }
+}
+```
+
+For running agents as MCP servers,
+
+```json
+{
+    "mcpServers": {
+        "MolMCP": {
+            "command": "uv",
+            "args": [
+                "run",
+                "--project",
+                "/path/to/mol-mcp",
+                "python",
+                "-m",
+                "molmcp",
+                "<name-of-agent>"
             ]
         }
     }
