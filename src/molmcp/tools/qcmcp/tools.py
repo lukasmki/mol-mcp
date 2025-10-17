@@ -7,11 +7,12 @@ from .geomopt import optimize
 
 
 def register_tools(mcp: FastMCP[Any]):
-
     @mcp.tool
-    def geometry_optimize(input: str):
+    def geometry_optimize(
+        input_file: Annotated[str, "Path to coordinates input file"],
+    ) -> dict[str, Any]:
         """Optimize the input geometry using xTB"""
-        atoms = io.read(StringIO(input), index=0)
+        atoms = io.read(input_file, index=0)
 
         log = StringIO()
         success, atoms = optimize(atoms, logfile=log)
