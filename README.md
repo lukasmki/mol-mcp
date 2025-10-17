@@ -1,5 +1,8 @@
 # Mol-MCP: Computational Chemistry Interfaces for LLMs
 
+> [!WARNING]
+> This project is a work in progress! 
+
 MolMCP is a modular set of interfaces for chemistry workflows. It provides a flexible architecture for building, configuring, and running agents and tools for chemical operatations.
 
 ## Features
