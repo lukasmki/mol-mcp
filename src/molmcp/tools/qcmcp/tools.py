@@ -10,6 +10,7 @@ def register_tools(mcp: FastMCP[Any]):
     @mcp.tool
     def geometry_optimize(
         input_file: Annotated[str, "Path to coordinates input file"],
+        output_file: Annotated[str, "Path to coordinate output file"],
     ) -> dict[str, Any]:
         """Optimize the input geometry using xTB"""
         atoms = io.read(input_file, index=0)
@@ -17,11 +18,9 @@ def register_tools(mcp: FastMCP[Any]):
         log = StringIO()
         success, atoms = optimize(atoms, logfile=log)
 
-        output = StringIO()
-        io.write(output, atoms)
+        io.write(output_file, atoms)
 
         return {
-            "success": success,
-            "output": output.getvalue(),
+            "success": str(success),
             "log": log.getvalue(),
         }
