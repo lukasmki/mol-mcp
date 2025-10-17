@@ -20,7 +20,7 @@ default_instruction = """The current date is {{currentDate}}."""
 
 
 # Define the agent
-@fast.agent(instruction=default_instruction, servers=["filesystem", "smiley"])
+@fast.agent(instruction=default_instruction, servers=["smiley"])
 async def main():
     # async with fast.run() as agent:
     #     await agent.interactive()
