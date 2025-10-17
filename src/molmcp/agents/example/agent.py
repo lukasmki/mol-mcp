@@ -11,7 +11,7 @@ if not scratch.is_dir():
 
 # Create the agent
 fast = FastAgent(
-    "fast-agent example",
+    "MolMCP Tool Agent",
     config_path=Path(__file__).parent.resolve() / "config.yaml",
     parse_cli_args=False,
 )
@@ -20,15 +20,10 @@ default_instruction = """The current date is {{currentDate}}."""
 
 
 # Define the agent
-@fast.agent(instruction=default_instruction, servers=["filesystem", "smiley"])
+@fast.agent(instruction=default_instruction, servers=["filesystem", "tblite"])
 async def main():
-    # async with fast.run() as agent:
-    #     await agent.interactive()
-    await fast.start_server(
-        server_name="ExampleAgent",
-        server_description="This is an example.",
-        transport="stdio",
-    )
+    async with fast.run() as agent:
+        await agent.interactive()
 
 
 if __name__ == "__main__":

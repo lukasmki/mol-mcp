@@ -37,6 +37,9 @@ mcp:
     smiley:
       command: "uv"
       args: ["run", "sm-mcp"]
+    tblite:
+      command: "uv"
+      args: ["run", "qc-mcp"]
     filesystem:
       command: "npx"
       args: ["-y", "@modelcontextprotocol/server-filesystem"]

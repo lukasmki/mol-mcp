@@ -22,8 +22,6 @@ default_instruction = """The current date is {{currentDate}}."""
 # Define the agent
 @fast.agent(instruction=default_instruction, servers=["smiley"])
 async def main():
-    # async with fast.run() as agent:
-    #     await agent.interactive()
     await fast.start_server(
         server_name="ExampleAgent",
         server_description="This is an example.",
