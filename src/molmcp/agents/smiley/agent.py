@@ -11,22 +11,27 @@ if not scratch.is_dir():
 
 # Create the agent
 fast = FastAgent(
-    "fast-agent example",
+    "Smiley",
     config_path=Path(__file__).parent.resolve() / "config.yaml",
     parse_cli_args=False,
 )
 
-default_instruction = """The current date is {{currentDate}}."""
+default_instruction = """
+You are Smiley, an expert in SMILES string generation, retrieval, and manipulation.
+"""
 
 
 # Define the agent
 @fast.agent(instruction=default_instruction, servers=["smiley"])
 async def main():
-    await fast.start_server(
-        server_name="ExampleAgent",
-        server_description="This is an example.",
-        transport="stdio",
-    )
+    async with fast.run() as agent:
+        await agent.interactive()
+
+    # await fast.start_server(
+    #     server_name="SmileyAgent",
+    #     server_description="An agent with access to SMILES string retrieval and manipulation tools",
+    #     transport="stdio",
+    # )
 
 
 if __name__ == "__main__":
