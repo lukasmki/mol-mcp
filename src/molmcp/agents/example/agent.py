@@ -16,11 +16,14 @@ fast = FastAgent(
     parse_cli_args=False,
 )
 
-default_instruction = """The current date is {{currentDate}}."""
+default_instruction = """
+You are a tool calling agent.
+Before providing any file paths, check the allowed filesystem root directories.
+"""
 
 
 # Define the agent
-@fast.agent(instruction=default_instruction, servers=["filesystem", "tblite"])
+@fast.agent(instruction=default_instruction, servers=["filesystem", "tblite", "smiley"])
 async def main():
     async with fast.run() as agent:
         await agent.interactive()
