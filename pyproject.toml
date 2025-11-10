@@ -24,6 +24,9 @@ pack-mcp = "molmcp.tools.packmcp.server:main"
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.package-data]
+"molmcp" = ["src/molmcp/agents/*/*.yaml"]
+
 [tool.setuptools.packages.find]
 namespaces = true
 where = ["src"]
