@@ -40,10 +40,12 @@ def register_tools(mcp: FastMCP[Any]):
         "Find maximum common substructure between SMILES"
         return SMILES(mols).max_common_substructure
 
-    @mcp.tool
-    def add(mol_a: SmilesStr, mol_b: SmilesStr) -> SmilesStr:
-        "Add SMILES together (dot-separated SMILES)"
-        return str(SMILES(mol_a).add(mol_b))
+    # disabled bc the llm rarely uses this correctly
+    # and its so simple that it can do it on its own
+    # @mcp.tool
+    # def add(mol_a: SmilesStr, mol_b: SmilesStr) -> SmilesStr:
+    #     "Add SMILES together (dot-separated SMILES)"
+    #     return str(SMILES(mol_a).add(mol_b))
 
     @mcp.tool
     def remove(mol: SmilesStr, target_smarts: SmartsStr) -> SmilesStr:
