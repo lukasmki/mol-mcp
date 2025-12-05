@@ -1,4 +1,4 @@
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Optional, Self
 from pydantic import BaseModel, ValidationError
 from pydantic import field_validator
 
@@ -14,3 +14,18 @@ type ChemicalIdentifier = Annotated[
     "Standard InChIKey",
     "CAS Registry Number",
 ]
+
+
+class Status(BaseModel):
+    success: bool
+    message: Optional[str]
+
+
+class File(BaseModel):
+    path: str
+    content: Optional[str]
+
+
+class Directory(BaseModel):
+    path: str
+    children: Optional[list[Self | File]]

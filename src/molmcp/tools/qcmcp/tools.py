@@ -5,6 +5,8 @@ from rdkit import Chem
 from typing import Any, Annotated, Literal
 from fastmcp import FastMCP
 
+from molmcp.core.types import Status
+
 from .geometry import geometry_optimize, geometry_from_smiles
 
 
@@ -13,7 +15,7 @@ def register_tools(mcp: FastMCP[Any]):
     def optimize(
         input_file: Annotated[str, "URI to coordinates input file"],
         output_file: Annotated[str, "URI to coordinate output file"],
-    ) -> dict:
+    ) -> Status:
         """Optimize the input geometry using xTB"""
         atoms = io.read(input_file, index=0)
 
@@ -22,10 +24,7 @@ def register_tools(mcp: FastMCP[Any]):
 
         io.write(output_file, atoms)
 
-        return {
-            "success": str(success),
-            "log": log.getvalue(),
-        }
+        return Status(success=success, message=log.getvalue())
 
     @mcp.tool
     def build(
@@ -34,7 +33,7 @@ def register_tools(mcp: FastMCP[Any]):
             str, "URI to coordinate output file (must be within root path)"
         ],
         format: Annotated[Literal["pdb", "xyz"], "Output file format (default: pdb)"],
-    ) -> dict:
+    ) -> Status:
         """Generates a geometry for the input SMILES"""
         mol = geometry_from_smiles(smiles)
 
@@ -47,4 +46,4 @@ def register_tools(mcp: FastMCP[Any]):
             atoms = Atoms(numbers=num, positions=pos)
             io.write(output_file, atoms, format=format)
 
-        return {"success": "True"}
+        return Status(success=True, message=f"File created at {output_file}")
