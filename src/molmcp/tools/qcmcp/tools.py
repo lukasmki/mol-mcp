@@ -17,7 +17,8 @@ def register_tools(mcp: FastMCP[Any]):
         output_file: Annotated[str, "URI to coordinate output file"],
     ) -> Status:
         """Optimize the input geometry using xTB"""
-        atoms = io.read(input_file, index=0)
+        atoms: Atoms | list[Atoms] = io.read(input_file, index=0)
+        assert isinstance(atoms, Atoms)
 
         log = StringIO()
         success, atoms = geometry_optimize(atoms, logfile=log)

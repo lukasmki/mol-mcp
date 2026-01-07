@@ -1,6 +1,5 @@
-from typing import Annotated, Literal, Optional, Self
-from pydantic import BaseModel, ValidationError
-from pydantic import field_validator
+from typing import Annotated, Optional, Self
+from pydantic import BaseModel
 
 # type aliases
 type SmilesStr = Annotated[str, "SMILES"]

@@ -1,5 +1,5 @@
 import json
-from typing import Annotated, Any
+from typing import Any
 from urllib import parse, request
 from urllib.error import HTTPError
 
@@ -39,13 +39,6 @@ def register_tools(mcp: FastMCP[Any]):
     def max_common_substructure(mols: list[SmilesStr]) -> dict:
         "Find maximum common substructure between SMILES"
         return SMILES(mols).max_common_substructure
-
-    # disabled bc the llm rarely uses this correctly
-    # and its so simple that it can do it on its own
-    # @mcp.tool
-    # def add(mol_a: SmilesStr, mol_b: SmilesStr) -> SmilesStr:
-    #     "Add SMILES together (dot-separated SMILES)"
-    #     return str(SMILES(mol_a).add(mol_b))
 
     @mcp.tool
     def remove(mol: SmilesStr, target_smarts: SmartsStr) -> SmilesStr:

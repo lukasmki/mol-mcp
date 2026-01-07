@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import Any, Annotated, Literal, Optional
 from fastmcp import FastMCP
 
-from ase import io
+from ase import io, Atoms
 from ase.md.velocitydistribution import MaxwellBoltzmannDistribution
 from tblite.ase import TBLite
 
@@ -43,21 +43,28 @@ class NVTSchema(MolecularDynamicsSchema):
 
 def register_tools(mcp: FastMCP[Any]) -> None:
     @mcp.tool
-    def run_singlepoint(config: SinglepointSchema) -> dict:
+    def run_singlepoint(config: SinglepointSchema) -> dict[str, Any]:
         """Runs a singlepoint xTB calculation"""
-        atoms = io.read(config.input_path, index=config.input_index)
+        atoms: Atoms | list[Atoms] = io.read(
+            config.input_path, index=config.input_index
+        )
+        assert isinstance(atoms, Atoms)
         atoms.calc = TBLite(atoms, method=config.method, verbosity=0)
         atoms.calc.calculate(atoms)
-        results = atoms.calc.results
+        results: dict[str, Any] = atoms.calc.results
         return results
 
     @mcp.tool
-    def run_NVE(config: MolecularDynamicsSchema):
+    def run_NVE(config: MolecularDynamicsSchema) -> Status:
         """Runs an NVE molecular dynamics simulation"""
 
         from ase.md.verlet import VelocityVerlet
 
-        atoms = io.read(config.input_path, index=config.input_index)
+        atoms: Atoms | list[Atoms] = io.read(
+            config.input_path, index=config.input_index
+        )
+        assert isinstance(atoms, Atoms)
+
         atoms.calc = TBLite(atoms, method=config.method, verbosity=0)
 
         if config.initialize_vel:
@@ -70,15 +77,19 @@ def register_tools(mcp: FastMCP[Any]) -> None:
         dyn.attach(io.write, config.output_freq, config.output_path, atoms)
         success = dyn.run(config.num_steps)
 
-        return Status(succes=success, message=log.getvalue())
+        return Status(success=success, message=log.getvalue())
 
     @mcp.tool
-    def run_NVT(config: NVTSchema):
+    def run_NVT(config: NVTSchema) -> Status:
         """Runs an NVT molecular dynamics simulation"""
 
         from ase.md.langevin import Langevin
 
-        atoms = io.read(config.input_path, index=config.input_index)
+        atoms: Atoms | list[Atoms] = io.read(
+            config.input_path, index=config.input_index
+        )
+        assert isinstance(atoms, Atoms)
+
         atoms.calc = TBLite(atoms, method=config.method, verbosity=0)
 
         if config.initialize_vel:
@@ -93,6 +104,6 @@ def register_tools(mcp: FastMCP[Any]) -> None:
             logfile=log,
             loginterval=config.log_freq,
         )
-        success = dyn.run(config.num_steps)
+        success: bool = dyn.run(config.num_steps)
 
         return Status(success=success, message=log.getvalue())

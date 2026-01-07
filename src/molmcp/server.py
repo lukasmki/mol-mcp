@@ -1,10 +1,14 @@
+"""mol-mcp all the tools"""
+
 import asyncio
+from typing import Any
 from fastmcp import FastMCP
+from fastmcp.tools import Tool
 from molmcp.tools.smileymcp import smiley_mcp
 from molmcp.tools.qcmcp import qc_mcp
 
 
-mcp = FastMCP(
+mcp: FastMCP[Any] = FastMCP(
     name="MolMCP",
     instructions="Toolkit for computational chemistry operations",
 )
@@ -12,7 +16,7 @@ mcp = FastMCP(
 
 async def setup():
     await mcp.import_server(smiley_mcp, prefix="SMILES")
-    # await mcp.import_server(qc_mcp, prefix="QC")
+    await mcp.import_server(qc_mcp, prefix="GEOMETRY")
 
 
 try:
@@ -23,9 +27,9 @@ except RuntimeError:
 
 
 async def show_tools():
-    tools = await mcp.get_tools()
-    print(f"\n📋 Available tools ({len(tools)}):")
-    for name in sorted(tools.keys()):
+    tools: dict[str, Tool] = await mcp.get_tools()
+    print(f"\n Available tools ({len(tools)}):")
+    for name in tools.keys():
         print(f"  - {name}")
 
 

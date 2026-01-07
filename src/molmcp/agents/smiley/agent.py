@@ -1,4 +1,3 @@
-import os
 import asyncio
 from pathlib import Path
 
@@ -12,7 +11,7 @@ if not scratch.is_dir():
 # Create the agent
 fast = FastAgent(
     "Smiley",
-    config_path=Path(__file__).parent.resolve() / "config.yaml",
+    config_path=str(Path(__file__).parent.resolve() / "config.yaml"),
     parse_cli_args=False,
 )
 
