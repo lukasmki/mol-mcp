@@ -22,46 +22,26 @@ smileymcp
 - `tools.py` contains tool definitions and tool registry function
 - `smileslib` is a submodule and contains all of the actual logic behind the tool definitions
 
+Add the server to  `src/molmcp/__init__.py` with a name to have it appear in the CLI.
+```python
+TOOLS: dict[str, FastMCP[Any]] = {
+    "smiles": smileymcp.mcp,
+    "my-new-server": mynewserver.mcp,
+}
+```
+
 After adding the server, add the entry point under `[project.scripts]` in the `pyproject.toml`.
 
 ```toml
 [project.scripts]
-sm-mcp = "molmcp.tools.smileymcp.server:main"
+smls-mcp = "molmcp.tools.smileymcp.server:main"
 ```
 
 Then, you can run your server via `uv run`.
 ```sh
-uv run sm-mcp
+uv run smls-mcp
 ```
 
 ## Adding an agent
 
-Agents are implemented using [fast-agent](https://fast-agent.ai/agents/defining/).
-Agents can be run in an interactive mode with a command line interface or as an MCP server themselves which other clients can call.
-
-You can add a new agent by creating a new directory under `src/mcpmol/agents`.
-See `mcpmol/agents/example` for a reference setup, but this example is far from a full showing of fast-agent's workflow and multi-agent capabilties. At this point, the agent definitions look like this:
-
-``` sh
-example
-├── agent.py
-└── config.yaml
-```
-
-MCP servers are configured using the `config.yaml`. The example `agent.py` just implements a multi-step tool calling agent.
-
-Since fast-agents need to be run with `asyncio`, we don't add the agent entry point as a script in `pyproject.toml` as directly as we did before. So, we have a CLI in `src/molmcp/__main__.py`.
-
-Add your agent script at the top of that file and give it a short name,
-
-```python
-AGENTS = {
-    "example": "molmcp.agents.example.agent"
-}
-```
-
-Then, you can run your agent using the entry point
-
-```sh
-uv run agent example
-```
+I'm moving away from fast-agent to pydantic-ai, so this is still a work in progress!

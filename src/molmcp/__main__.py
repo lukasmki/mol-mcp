@@ -1,45 +1,74 @@
-import runpy
 import sys
-from argparse import ArgumentParser
+import asyncio
+from molmcp.agents.interactive import setup_fastagent
+from typing import Annotated, Any
 
-# Map short names to agent module paths (package-style)
-AGENTS = {
-    "example": "molmcp.agents.example.agent",
-    "smiley": "molmcp.agents.smiley.agent",
-}
+import typer
+from fastmcp import FastMCP
+from rich import print
+
+from molmcp import TOOLS
+
+app = typer.Typer()
+
+
+# mol-mcp list
+@app.command(name="list", help="List MCP toolkits")
+def list_tools():
+    print(f"{'name':20} server")
+    print(f"{'----':20} ------")
+    for name, server in TOOLS.items():
+        print(f"{name:20} {server.instructions}")
+
+
+# mol-mcp serve <name1> <name2> ... | --list
+@app.command(help="Run an MCP server")
+def serve(
+    tools: Annotated[list[str], typer.Argument()] = ["smiles"],
+    show_list: Annotated[bool, typer.Option("--list")] = False,
+):
+    if show_list:
+        list_tools()
+        return
+
+    async def setup_server(mcp: FastMCP[Any], tools: list[str]):
+        for tool in tools:
+            if tool not in TOOLS:
+                raise ValueError(
+                    f"Toolkit `{tool}` not found. Run `mol-mcp list` to show toolkits."
+                )
+            await mcp.import_server(TOOLS[tool], prefix=tool)
+
+    async def show_tools():
+        tools = await mcp.get_tools()
+        print(f"\n Available tools ({len(tools)}):", file=sys.stderr)
+        for name in tools.keys():
+            print(f"  - {name}", file=sys.stderr)
+
+    mcp: FastMCP[Any] = FastMCP()
+    asyncio.run(setup_server(mcp, tools))
+    asyncio.run(show_tools())
+    mcp.run()
+
+
+# mol-mcp go <name1> <name2> ... | --list
+@app.command(
+    help="Run an FastAgent chat",
+    context_settings={"allow_extra_args": True, "ignore_unknown_options": True},
+)
+def go(
+    tools: Annotated[list[str], typer.Argument()] = ["smiles"],
+    show_list: Annotated[bool, typer.Option("--list")] = False,
+):
+    if show_list:
+        list_tools()
+        return
+    asyncio.run(setup_fastagent(tools)())
 
 
 def main():
-    parser = ArgumentParser()
-    parser.add_argument("agent", nargs="?", default="example", help="Agent to run")
-    parser.add_argument(
-        "-l", "--list", action="store_true", help="List available agents"
-    )
-    # Any args after `--` will be forwarded to the agent script via sys.argv
-    args, extra = parser.parse_known_args()
-
-    if args.list or args.agent == "list":
-        print("Available agents:")
-        for name in sorted(AGENTS):
-            print(f" - {name}")
-        sys.exit(0)
-
-    agent_name = args.agent
-    if agent_name not in AGENTS:
-        print(
-            f"Unknown agent: {agent_name}\nAvailable: {', '.join(sorted(AGENTS.keys()))}"
-        )
-        raise SystemExit(2)
-
-    module_name = AGENTS[agent_name]
-
-    # Prepare sys.argv for the agent module: keep program name and forward extras
-    # If user passed a '--' separator, allow extra args to be forwarded.
-    sys.argv = [f"{agent_name}"] + extra
-
-    # Execute the agent module as a script (honors if __name__ == '__main__')
-    runpy.run_module(module_name, run_name="__main__", alter_sys=True)
+    app()
 
 
 if __name__ == "__main__":
-    main()
+    app()

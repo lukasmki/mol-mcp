@@ -23,6 +23,24 @@ pyproject.toml      # Project metadata and dependencies
 README.md           # Project documentation
 ```
 
+## Usage
+
+### Tools
+
+```sh
+uvx --from git+https://github.com/lukasmki/mol-mcp mol-mcp serve --help
+```
+
+### Chat TUI
+
+To use the built-in interactive agent with `mol-mcp` tools,
+
+```sh
+uv run mol-mcp go
+```
+
+Currently, the interactive agent is setup to use the Anthropic API. If you want to use another, take a look at the `src/molmcp/agents/interactive.py` script for an example of using fast-agent.
+
 ## Installation
 
 Install `uv`
@@ -35,7 +53,7 @@ brew install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-The `qc` mcp server depends on `tblite` and requires a Fortran compiler to complete installation.
+The `calc` and `geometry` servers depend on `tblite` and require a Fortran compiler to complete installation.
 
 ```sh
 # macOS
@@ -45,9 +63,34 @@ brew install gfortran
 sudo apt install gfortran
 ```
 
-### Easy Install with `uvx`: MCP-JSON Supporting Clients (Claude Desktop)
+In your project directory, install with `uv`
 
-Add the server into your `claude_desktop_config.json`.
+```sh
+uv add git+https://github.com/lukasmki/mol-mcp
+```
+
+or
+
+```sh
+uv pip install git+https://github.com/lukasmki/mol-mcp
+```
+
+You can also run it as a `uv` tool outside of a project!
+
+```sh
+uvx --from git+https://github.com/lukasmki/mol-mcp mol-mcp serve --help
+```
+
+or install it to use it anywhere
+
+```sh
+uv tool install --from git+https://github.com/lukasmki/mol-mcp
+mol-mcp serve --help
+```
+
+### Easy Install with `uvx`: MCP-JSON Supporting Clients
+
+Add the server into your MCP config:
 
 ```json
 {
@@ -57,7 +100,10 @@ Add the server into your `claude_desktop_config.json`.
             "args": [
                 "-from",
                 "git+https://github.com/lukasmki/mol-mcp",
-                "mol-mcp"
+                "mol-mcp",
+                "serve",
+                "smiles",
+                "geometry",
             ]
         }
     }
@@ -77,7 +123,10 @@ On Windows with WSL2,
                 "uvx",
                 "-from",
                 "git+https://github.com/lukasmki/mol-mcp",
-                "mol-mcp"
+                "mol-mcp",
+                "serve",
+                "smiles",
+                "geometry",
             ]
         }
     }
@@ -97,7 +146,10 @@ Clone the repository.
                 "run",
                 "--project",
                 "/path/to/mol-mcp",
-                "mol-mcp"
+                "mol-mcp",
+                "serve",
+                "smiles",
+                "geometry",
             ]
         }
     }
@@ -119,50 +171,14 @@ On Windows with WSL2,
                 "--project",
                 "/path/to/mol-mcp",
                 "mol-mcp"
+                "serve",
+                "smiles",
+                "geometry",
             ]
         }
     }
 }
 ```
-
-For running agents as MCP servers,
-
-```json
-{
-    "mcpServers": {
-        "MolMCP": {
-            "command": "uv",
-            "args": [
-                "run",
-                "--project",
-                "/path/to/mol-mcp",
-                "python",
-                "-m",
-                "molmcp",
-                "<name-of-agent>"
-            ]
-        }
-    }
-}
-```
-
-## Usage
-
-### Tools
-
-```sh
-uvx --from git+https://github.com/lukasmki/mol-mcp mol-mcp
-```
-
-### Agents
-
-To use the default agent, set your API keys as env variables and run,
-
-```sh
-uv run agent example
-```
-
-Alternatively, you can put your keys in `fastagent.secrets.yaml` in your project dir.
 
 ## Contributing
 

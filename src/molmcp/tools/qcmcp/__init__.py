@@ -1,5 +1,5 @@
 """MCP server for running xtb calculations"""
 
-from .server import qc_mcp
+from .server import mcp
 
-__all__ = ["qc_mcp"]
+__all__ = ["mcp"]

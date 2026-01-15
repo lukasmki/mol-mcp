@@ -1,6 +1,6 @@
 [project]
 name = "mol-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13.5"
@@ -12,15 +12,17 @@ dependencies = [
     "tblite>=0.5.0 ; platform_system == 'Darwin'",
     "tblite==0.4.0 ; platform_system != 'Darwin'",
     "molify>=0.2.2",
+    "typer>=0.19.2",
+    "python-dotenv>=1.1.1",
 ]
 
 [project.scripts]
-agent = "molmcp.__main__:main"
-mol-mcp = "molmcp.server:main"
-sm-mcp = "molmcp.tools.smileymcp.server:main"
-qc-mcp = "molmcp.tools.qcmcp.server:main"
+mol-mcp = "molmcp.__main__:main"
+smls-mcp = "molmcp.tools.smileymcp.server:main"
+geom-mcp = "molmcp.tools.qcmcp.server:main"
 pack-mcp = "molmcp.tools.packmcp.server:main"
 calc-mcp = "molmcp.tools.calcmcp.server:main"
+
 
 [build-system]
 requires = ["setuptools", "wheel"]
